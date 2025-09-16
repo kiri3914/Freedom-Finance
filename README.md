@@ -94,7 +94,7 @@ tech_task_freedom/
 
 ```bash
 # Клонируйте репозиторий
-git clone <repository-url>
+git clone https://github.com/kiri3914/Freedom-Finance
 cd tech_task_freedom
 
 # Запустите все сервисы одной командой
