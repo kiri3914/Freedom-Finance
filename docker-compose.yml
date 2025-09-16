@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  # Redis сервис
+  redis:
+    image: redis:7-alpine
+    container_name: async_api_redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    command: redis-server --appendonly yes
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # FastAPI приложение
+  app:
+    build: .
+    container_name: async_api_app
+    ports:
+      - "8000:8000"
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_DB=0
+      - EXTERNAL_API_URL=https://catfact.ninja/fact
+      - EXTERNAL_API_TIMEOUT=10
+      - DEBUG=False
+    depends_on:
+      redis:
+        condition: service_healthy
+    volumes:
+      - ./app.log:/app/app.log
+    restart: unless-stopped
+
+volumes:
+  redis_data:
