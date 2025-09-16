@@ -95,7 +95,7 @@ tech_task_freedom/
 ```bash
 # Клонируйте репозиторий
 git clone https://github.com/kiri3914/Freedom-Finance
-cd tech_task_freedom
+cd Freedom-Finance
 
 # Запустите все сервисы одной командой
 docker-compose up --build
